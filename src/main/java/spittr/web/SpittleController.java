@@ -25,6 +25,7 @@ public class SpittleController {
 		this.spittleRepository = spittleRepository;
 	}
 
+	//do modelu zostanie dołączona lista pod nazwą spittleList
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Spittle> spittles(@RequestParam(value = "max", defaultValue = MAX_LONG_AS_STRING) long max,
 			@RequestParam(value = "count", defaultValue = "20") int count) {
@@ -39,6 +40,7 @@ public class SpittleController {
 
 	@RequestMapping(value = "/{spittleId}", method = RequestMethod.GET)
 	public String spittle(@PathVariable("spittleId") long spittleId, Model model) {
+		//dodany atrybut otrzyma automatycznie nazwę spittle
 		model.addAttribute(spittleRepository.findOne(spittleId));
 		return "spittle";
 	}
