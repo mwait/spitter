@@ -63,11 +63,6 @@
 	<version>4.2.4.RELEASE</version>
 </dependency>
 
-<dependency>
-	<groupId>org.springframework</groupId>
-	<artifactId>spring-context-support</artifactId>
-	<version>4.2.4.RELEASE</version>
-</dependency>
 <!-- Niezbędne do @RunWith(SpringJUnit4ClassRunner.class) -->
 <dependency>
 	<groupId>org.springframework</groupId>
@@ -92,11 +87,7 @@
 	<artifactId>aspectjweaver</artifactId>
 	<version>1.8.5</version>
 </dependency>
-<dependency>
-	<groupId>org.springframework</groupId>
-	<artifactId>spring-context-support</artifactId>
-	<version>4.2.4.RELEASE</version>
-</dependency>
+
 <!-- Niezbędny do SpittrWebAppInitializer  ze scopem provided, to się już znajduje w kontenerze -->
 <dependency>
     <groupId>javax.servlet</groupId>
@@ -129,10 +120,12 @@
 	<version>5.2.2.Final</version>
 </dependency>
 
+    <dependency>
+    <groupId>taglibs</groupId>
+    <artifactId>standard</artifactId>
+    <version>1.1.2</version>
+   </dependency>
 </dependencies>
-  
-  
-  
   <build>
 <plugins>
 <!-- eliminates the “web.xml file is missing” build error message  -->
@@ -143,7 +136,59 @@
 <configuration>
 <failOnMissingWebXml>false</failOnMissingWebXml>
 </configuration>
+
+<!-- cargo do automatycznego deployu na serwer mvn cargo:deploy -->
 </plugin>
-</plugins>
+	<plugin>
+		<groupId>org.codehaus.cargo</groupId>
+		<artifactId>cargo-maven2-plugin</artifactId>
+		<version>1.4.13</version>
+		<configuration>
+			<!-- Container configuration -->
+			<container>
+				<containerId>tomcat8x</containerId>
+				<home>c:/Program Files (x86)/apache/apache-tomcat-8.0.24</home>
+				<output>${project.build.directory}/tomcat8x/container.log</output>
+				<append>false</append>
+				<log>${project.build.directory}/tomcat8x/cargo.log</log>
+			</container>
+			<!-- Configuration to use with the container or the deployer -->
+			<configuration>
+				<type>standalone</type>
+				<home>c:/Program Files (x86)/apache/apache-tomcat-8.0.24</home>
+				<properties>
+					<cargo.servlet.port>8080</cargo.servlet.port>
+					<cargo.logging>high</cargo.logging>
+				</properties>
+			</configuration>
+			<deployables>
+				<deployable>
+					<groupId>com.wait.spring</groupId>
+					<artifactId>spittr</artifactId>
+					<type>war</type>
+  <!---->
+					<properties>
+						<context>spittr</context>
+					</properties>
+				</deployable>
+			</deployables>
+		</configuration>
+	</plugin>
+      
+<!--      plugin do definiowania różnych goalsów przy jednym poleceniu, rewelacja  exec:exec -->
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.4.0</version>
+            <configuration>
+                <executable>mvn</executable>
+                <arguments>
+                    <argument>clean</argument>
+                    <argument>install</argument>
+                    <argument>cargo:deploy</argument>
+                </arguments>
+            </configuration>
+        </plugin>
+ </plugins>
 </build>
 </project>
