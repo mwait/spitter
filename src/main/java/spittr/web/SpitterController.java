@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import spittr.Spitter;
 import spittr.data.SpitterRepository;
@@ -36,7 +37,7 @@ public class SpitterController {
 	}
 
 	@RequestMapping(value = "/register", method = POST)
-	public String processRegistration(@RequestPart("profilePicture")  MultipartFile profilePicture, @Valid Spitter spitter, Errors errors) throws IllegalStateException, IOException {
+	public String processRegistration(@RequestPart("profilePicture")  MultipartFile profilePicture, @Valid Spitter spitter, Errors errors, RedirectAttributes model) throws IllegalStateException, IOException {
 		if (errors.hasErrors()) {
 			return "registerForm";
 		}
@@ -44,7 +45,13 @@ public class SpitterController {
 		
 		if(!profilePicture.isEmpty()){ profilePicture.transferTo(
 				new File("c:\\tmp\\spittr\\uploads\\" + "image_"+profilePicture.getOriginalFilename()));}
-		return "redirect:/spitter/" + spitter.getUsername();
+		//taki zapis jest bezpieczniejszy niż konkatenacja
+		model.addAttribute("username", spitter.getUsername());
+		//spitterId został by dołączony do modelu w postaci parametru (bo nie ma odwzorowania w url)
+		//model.addAttribute("spitterId", spitter.getId());
+		//umożliwia dodanie atrybutu jednorazowego przy przekierowaniu (przez sesję)
+		model.addFlashAttribute("spitter", spitter);
+		return "redirect:/spitter/{username}";
 	}
 
 	/*
