@@ -16,7 +16,9 @@ public class SpittleRepositoryImpl implements SpittleRepository {
 	}
 	
 	public Spittle findOne(long spittleId) {
+		if(spittleId<=99L)
 		return new Spittle("Spittle ",new Date());
+		return null;
 	}
 
 	private List<Spittle> createSpittleList(int count) {
