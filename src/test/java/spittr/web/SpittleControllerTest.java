@@ -23,7 +23,7 @@ public class SpittleControllerTest {
 
 	@Test
 	public void testSpittle() throws Exception {
-		Spittle expectedSpittle = new Spittle("Hello", new Date());
+		Spittle expectedSpittle = new Spittle("Hello", "Franek", new Date());
 		SpittleRepository mockRepository = mock(SpittleRepository.class);
 		when(mockRepository.findOne(12345)).thenReturn(expectedSpittle);
 		SpittleController controller = new SpittleController(mockRepository);
@@ -62,7 +62,7 @@ public class SpittleControllerTest {
 	private List<Spittle> createSpittleList(int count) {
 		List<Spittle> spittles = new ArrayList<Spittle>();
 		for (int i = 0; i < count; i++) {
-			spittles.add(new Spittle("Spittle " + i, new Date()));
+			spittles.add(new Spittle("Spittle " + i, "Franek", new Date()));
 		}
 		return spittles;
 	}

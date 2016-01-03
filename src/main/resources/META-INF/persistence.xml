@@ -4,8 +4,6 @@
 	<provider>
             org.apache.openjpa.persistence.PersistenceProviderImpl
         </provider>
-		<class>spittr.domain.Spitter</class>
-		<class>spittr.domain.Spittle</class>
 		
 			<properties>
 			<property name="openjpa.ConnectionFactoryProperties" value="PrintParameters=true" />

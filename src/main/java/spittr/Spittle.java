@@ -2,26 +2,38 @@ package spittr;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+@Table(name = "Spittle")
+@Entity
 public class Spittle {
-	private final Long id;
-	private final String message;
-	private final Date time;
-	private Double latitude;
-	private Double longitude;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Column
+	private String message;
+	@Column
+	private String name;
+	@Column
+	private Date time;
 
-	public Spittle(String message, Date time) {
-		this(message, time, null, null);
+	public Spittle() {
 	}
 
-	public Spittle(String message, Date time, Double longitude, Double latitude) {
+	public Spittle(String message, String name, Date time) {
 		this.id = null;
 		this.message = message;
+		this.name = name;
 		this.time = time;
-		this.longitude = longitude;
-		this.latitude = latitude;
+
 	}
 
 	public long getId() {
@@ -36,12 +48,24 @@ public class Spittle {
 		return time;
 	}
 
-	public Double getLongitude() {
-		return longitude;
+	public String getName() {
+		return name;
 	}
 
-	public Double getLatitude() {
-		return latitude;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
 	}
 
 	@Override

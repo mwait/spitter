@@ -14,8 +14,11 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.OpenJpaDialect;
 import org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 
 @Configuration
+@EnableTransactionManagement
 public class DataConfig {
 
     @Bean
@@ -69,4 +72,6 @@ public class DataConfig {
     //    transactionManager.setJpaDialect(jpaDialect());
         return transactionManager;
     }
+    
+    
 }

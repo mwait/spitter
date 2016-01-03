@@ -1,5 +1,11 @@
 package spittr;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -7,22 +13,32 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Email;
 
+@Table(name="Spitter")
+@Entity
 public class Spitter {
 
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name="username")
 	@NotNull
 	@Size(min=5, max=16, message="{username.size}")
 	private String username;
+	@Column(name="password")
 	@NotNull
 	@Size(min=5, max=25, message="{password.size}")
 	private String password;
+	@Column(name="firstName")
 	@NotNull
 	@Size(min=2, max=30, message="{firstName.size}")
 	private String firstName;
+	@Column(name="lastName")
 	@NotNull
 	@Size(min=2, max=30, message="{lastName.size}")
 	private String lastName;
+	@Column(name="email")
 	@NotNull
 	@Email(message="{email.valid}")
 	private String email;

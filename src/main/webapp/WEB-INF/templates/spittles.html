@@ -3,7 +3,7 @@
 xmlns:th="http://www.thymeleaf.org"
 xmlns:sec=
 "http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-  <head>
+<head>
     <title>Spitter</title>
     <link rel="stylesheet" 
           type="text/css" 
@@ -11,17 +11,21 @@ xmlns:sec=
   </head>
   <body>
 <!--     <div id="header" th:include="page :: header"></div> -->
-  
+
+
     <div id="content">
       <div class="spittleForm">
         <h1>Spit it out...</h1>
-        <form method="POST" name="spittleForm">
-          <input type="hidden" name="latitude" />
-          <input type="hidden" name="longitude" />
-          <textarea name="message" cols="80" rows="5"></textarea><br/>
-          <input type="submit" value="Add" />
-        </form>
-      </div>
+
+			<form action="#" th:action="@{/spittles}" th:object="${spittle}"
+				method="post">
+				<input type="text" th:field="*{name}"/><br/> 
+				<textarea th:field="*{message}" cols="80" rows="5"></textarea>
+				<br /> <input type="submit" value="Add" />
+			</form>
+
+
+		</div>
       <div class="listTitle">
         <h1>Recent Spittles</h1>
         <ul class="spittleList">
@@ -30,7 +34,9 @@ xmlns:sec=
             <div class="spittleMessage" th:text="${spittle.message}">Spittle message</div>
             <div>
               <span class="spittleTime" th:text="${spittle.time}">spittle timestamp</span>
-              <span class="spittleLocation" th:text="'{' + ${spittle.latitude} + ', ' + ${spittle.longitude} + ')'">lat, long</span>
+            </div>
+               <div>
+              <span class="spittleTime" th:text="${spittle.name}">spittle timestamp</span>
             </div>
           </li>
         </ul>
