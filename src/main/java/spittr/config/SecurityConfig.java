@@ -13,12 +13,13 @@ import org.springframework.security.web.authentication.rememberme.InMemoryTokenR
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	protected void configure(HttpSecurity http) throws Exception {
-		http
+/*		http
 		.authorizeRequests()
 		.anyRequest().authenticated()
 		.and()
 		.formLogin().and()
-		.httpBasic();
+		.httpBasic();*/
+	
 		}
 
 	@Override

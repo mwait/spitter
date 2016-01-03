@@ -1,5 +1,7 @@
 package spittr;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +17,7 @@ import org.hibernate.validator.constraints.Email;
 
 @Table(name="Spitter")
 @Entity
-public class Spitter {
+public class Spitter implements Serializable {
 
 	@Id
 	@Column(name = "id")
